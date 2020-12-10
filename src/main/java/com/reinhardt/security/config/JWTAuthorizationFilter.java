@@ -1,7 +1,9 @@
-package com.reinhardt.controller;
+package com.reinhardt.security.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,12 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.reinhardt.util.OrderConstants.*;
+import static com.reinhardt.security.util.OrderConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+    private String secret;
+
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, String secret) {
         super(authenticationManager);
+        this.secret = secret;
     }
 
     @Override
@@ -41,9 +46,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req){
         String token = req.getHeader(HEADER_STRING);
-        System.out.println(token);
         if(token != null){
-            String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+            String user = JWT.require(Algorithm.HMAC512(secret.getBytes()))
                     .build().verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
 

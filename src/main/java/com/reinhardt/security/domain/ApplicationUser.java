@@ -1,4 +1,4 @@
-package com.reinhardt.domain;
+package com.reinhardt.security.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

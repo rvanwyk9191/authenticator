@@ -1,4 +1,4 @@
-package com.reinhardt;
+package com.reinhardt.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
-package com.reinhardt.controller;
+package com.reinhardt.security.controller;
 
-import com.reinhardt.domain.ApplicationUser;
-import com.reinhardt.repository.ApplicationUserRepository;
+import com.reinhardt.security.domain.ApplicationUser;
+import com.reinhardt.security.repository.ApplicationUserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

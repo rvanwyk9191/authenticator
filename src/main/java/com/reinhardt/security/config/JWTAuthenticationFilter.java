@@ -1,8 +1,10 @@
-package com.reinhardt.controller;
+package com.reinhardt.security.config;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reinhardt.domain.ApplicationUser;
+import com.reinhardt.security.domain.ApplicationUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,14 +20,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.reinhardt.util.OrderConstants.*;
+import static com.reinhardt.security.util.OrderConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private String secret;
+
     private AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager){
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secret){
         this.authenticationManager = authenticationManager;
+        this.secret = secret;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT.create()
                 .withSubject(((User) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(HMAC512(SECRET.getBytes()));
+                .sign(HMAC512(secret.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 

@@ -1,7 +1,7 @@
-package com.reinhardt.service;
+package com.reinhardt.security.service;
 
-import com.reinhardt.domain.ApplicationUser;
-import com.reinhardt.repository.ApplicationUserRepository;
+import com.reinhardt.security.domain.ApplicationUser;
+import com.reinhardt.security.repository.ApplicationUserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
